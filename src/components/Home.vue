@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>Hello</h1>
     <el-button>按我</el-button>
+    <i class="fa fa-users"></i>
   </div>
 </template>
 
@@ -12,6 +13,11 @@ export default {
   }
 }
 </script>
-<style scoped>
-
+<style lang="scss">
+  .hello{
+    background: yellow;
+    h1{
+      color: white;
+    }
+  }
 </style>
