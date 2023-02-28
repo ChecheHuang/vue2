@@ -8,8 +8,9 @@ export const validateName = (rule, value, callback) => {
 };
 
 export const validatePassword = (rule, value, callback) => {
-  const regex =
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,12}$/;
+//   const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,12}$/;
+    const regex = /^[a-zA-Z0-9]{6,12}$/;
+
   if (value === "") {
     callback(new Error("請輸入密碼"));
   } else if (!regex.test(value)) {

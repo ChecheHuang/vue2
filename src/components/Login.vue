@@ -5,10 +5,34 @@
         <span>通用後臺管理系統</span>
       </div>
       <el-form label-width="80px" :model="form" ref="form">
-        <el-form-item label="用戶名" prop="username" :rules="rules.username">
+        <el-form-item
+          label="用戶名"
+          prop="username"
+          :rules="[
+            { required: true, message: '請輸入用戶名', trigger: 'blur' },
+            {
+              min: 4,
+              max: 10,
+              message: '長度在4-10位字符之間',
+              trigger: 'blur',
+            },
+          ]"
+        >
           <el-input v-model="form.username"></el-input>
         </el-form-item>
-        <el-form-item label="密碼" prop="password" :rules="rules.password">
+        <el-form-item
+          label="密碼"
+          prop="password"
+          :rules="[
+            { required: true, message: '請輸入密碼', trigger: 'blur' },
+            {
+              min: 6,
+              max: 12,
+              message: '長度在6-12位字符之間',
+              trigger: 'blur',
+            },
+          ]"
+        >
           <el-input type="password" v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item>
@@ -19,9 +43,7 @@
   </div>
 </template>
 <script>
-import {validateName,validatePassword}from '../utils/validate'
-import {setToken} from '@/utils/setToken'
-
+// import axios from "axios";
 export default {
   name: "VueLogin",
   props: {},
@@ -31,28 +53,25 @@ export default {
         username: "",
         password: "",
       },
-      rules: {
-        username: [{ validator: validateName, trigger: "blur" }],
-        password: [{ validator: validatePassword, trigger: "blur" }],
-      },
     };
   },
   methods: {
     login(form) {
+      this.service.post("/login", this.form)
+      .then((res) => {
+        console.log(res);
+      });
       this.$refs[form].validate((valid) => {
         if (valid) {
-          console.log(this.form);
-          const url=''
-          this.axios.post(url,this.form)
-          .then((res)=>{
-            if(res.data.status===200){
-                setToken("username",res.data.username)
-                this.$message({message:res.data.message,type:"success"})
-                this.$router.push("/home")
-            }
-          }).catch((err)=>{
-            console.error(err)
-          })
+
+          // axios
+          //   .post("api2/login", this.form)
+          //   .then((res) => {
+          //     console.log(res);
+          //   })
+          //   .catch((err) => {
+          //     console.error(err);
+          //   });
         } else {
           console.error(this.form);
         }
