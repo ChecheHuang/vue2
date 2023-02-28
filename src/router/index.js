@@ -22,6 +22,11 @@ export default new Router({
       // component:()=>import('../components/Home.vue')
       component: (resolve) => require(["../components/Home.vue"], resolve),
     },
+    {
+      path: "*",
+      name:"NotFound",
+      component:()=>import('../components/NotFound.vue')
+    },
   ],
   mode: "history",
 });

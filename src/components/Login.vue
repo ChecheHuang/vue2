@@ -43,7 +43,8 @@
   </div>
 </template>
 <script>
-// import axios from "axios";
+import { setToken } from "@/utils/setToken";
+import { login } from "@/api/api";
 export default {
   name: "VueLogin",
   props: {},
@@ -57,21 +58,28 @@ export default {
   },
   methods: {
     login(form) {
-      this.service.post("/login", this.form)
-      .then((res) => {
-        console.log(res);
-      });
       this.$refs[form].validate((valid) => {
         if (valid) {
+          console.log(this.form);
+          // this.service.post("/login", this.form).then((res) => {
+          //   if (res.data.status === 200) {
+          //     setToken("username", res.data.username);
+          //     setToken("token", res.data.token);
+          //     this.$message({ message: res.data.message, type: "success" });
+          //     this.$router.push("/home");
+          //   }
+          //   console.log(res);
+          // });
 
-          // axios
-          //   .post("api2/login", this.form)
-          //   .then((res) => {
-          //     console.log(res);
-          //   })
-          //   .catch((err) => {
-          //     console.error(err);
-          //   });
+          login(this.form).then((res) => {
+            if (res.data.status === 200) {
+              setToken("username", res.data.username);
+              setToken("token", res.data.token);
+              this.$message({ message: res.data.message, type: "success" });
+              this.$router.push("/home");
+            }
+            console.log(res);
+          });
         } else {
           console.error(this.form);
         }
