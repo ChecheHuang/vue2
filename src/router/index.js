@@ -7,10 +7,20 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: "/",
+      redirect:'/login',
+      component:()=>import('../components/Home.vue')
+    },
+    {
+      path: "/login",
+      name:'login',
+      component:()=>import('../components/Login.vue')
+    },
+    {
       path: "/home",
       // component:Home
-      // component:()=>import('@/components/Home.vue')
-      component: (resolve) => require(["@/components/Home.vue"],resolve),
+      // component:()=>import('../components/Home.vue')
+      component: (resolve) => require(["../components/Home.vue"], resolve),
     },
   ],
   mode: "history",
