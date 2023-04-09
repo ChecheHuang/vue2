@@ -14,3 +14,17 @@ export function students(params){
         params
     })
 }
+
+export function studentDel(id){
+    return service({
+        method:'delete',
+        url:`/students/${id}`
+    })
+}
+
+export function student(name){
+    return service({
+        method:'get',
+        url:`/students/${name}`
+    })
+}
