@@ -128,7 +128,7 @@ export default {
     </el-pagination>
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .studentList {
     .el-form--inline{
         text-align: left;
