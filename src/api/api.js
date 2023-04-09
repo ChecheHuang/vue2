@@ -7,3 +7,10 @@ export function login(data){
         data
     })
 }
+export function students(params){
+    return service({
+        method:'get',
+        url:'/students',
+        params
+    })
+}
