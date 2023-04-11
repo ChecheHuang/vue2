@@ -29,23 +29,31 @@ export function student(name){
     })
 }
 
-export function info(data){
+export function info(data,type){
     data=qs.stringify(data)
     return service({
-        method:"post",
+        method: type,
         url:"/info",
         data
     })
 }
 
 
-export function updateInfo(data) {
-    data = qs.stringify(data)
-    console.log(data)
+// export function updateInfo(data) {
+//     data = qs.stringify(data)
+//     // console.log(data)
+//     return service({
+//         method: "put",
+//         method: "post",
+//         url: "/info",
+//         data
+//     })
+// }
+
+export function deleteInfo(id) {
     return service({
-        method: "put",
-        url: "/info",
-        data
+        method: "delete",
+        url: `/info/${id}`,
     })
 }
 

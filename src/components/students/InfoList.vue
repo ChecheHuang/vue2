@@ -1,5 +1,5 @@
 <script>
-import { info, getInfo ,updateInfo} from "@/api/api";
+import { info, getInfo, deleteInfo } from "@/api/api";
 export default {
   name: "InfoList",
   data() {
@@ -32,12 +32,12 @@ export default {
     this.getData();
   },
   computed: {},
-  watch:{
-    dialogFormVisible(newVal){
-        if(newVal===false){
-            this.$refs['form'].resetFields()
-        }
-    }
+  watch: {
+    dialogFormVisible(newVal) {
+      if (newVal === false) {
+        this.$refs["form"].resetFields();
+      }
+    },
   },
   methods: {
     getData() {
@@ -57,50 +57,48 @@ export default {
     addStudent() {
       this.dialogFormVisible = true;
       this.state = "新增";
-        this.form =  {
-          name: "",
-          sex: "1",
-          age: "",
-          father: "",
-          mather: "",
-          address: "",
-          time: "",
-          phone: "",
-        };
+      this.form =  {
+        name: "",
+        sex: "1",
+        age: "",
+        father: "",
+        mather: "",
+        address: "",
+        time: "",
+        phone: "",
+      };
     },
     edit(row) {
-    //   console.log(row);
+      //   console.log(row);
       this.dialogFormVisible = true;
       this.state = "修改";
       const newForm = { ...row };
       this.form = newForm;
     },
-    del(id) {
-      console.log(id);
+    del(row) {
+      this.$alert("確認刪除嗎?", "提示", {
+        confirmButtonText: "確定",
+        callback: () => {
+          deleteInfo(row.id).then((res) => {
+            if (res.data.status === 200) {
+              this.getData();
+              this.$message({ message: res.data.message, type: "success" });
+            }
+          });
+        },
+      });
     },
     sure(form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          //   console.log(this.form);
-          if (this.state === "新增") {
-            info(this.form).then((res) => {
-              console.log(res);
-              if (res.data.status === 200) {
-                this.dialogFormVisible = false;
-                this.getData();
-                this.$message({ type: "success", message: res.data.message });
-              }
-            });
-          }else if(this.state==='修改'){
-            updateInfo(this.form).then((res) => {
-              console.log(res);
-              if (res.data.status === 200) {
-                this.dialogFormVisible = false;
-                this.getData();
-                this.$message({ type: "success", message: res.data.message });
-              }
-            });
-          }
+          const method = this.state === "新增" ? "post" : "put";
+          info(this.form, method).then((res) => {
+            if (res.data.status === 200) {
+              this.dialogFormVisible = false;
+              this.$message({ type: "success", message: res.data.message });
+              this.getData();
+            }
+          });
         } else {
           console.error(this.form);
         }
@@ -212,7 +210,7 @@ export default {
     </el-dialog>
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .infoList {
   .cell {
     display: flex;
