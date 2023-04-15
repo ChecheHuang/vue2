@@ -24,7 +24,7 @@ export function changeInfo(root,method,url,form,callback){
         }
     }).catch(err => {
         throw err
-    })
+    })  
 }
 export function deleteInfo(root,url,id,callback){
     root.$alert("確認刪除嗎?", "提示", {
@@ -40,4 +40,25 @@ export function deleteInfo(root,url,id,callback){
             })
         },
     });
+}
+//作業列表
+export function getTableData(root,url,params,arr){
+    root.loading = true
+    root.service.get(url,{params}).then(res=>{
+        const {data,status,total}=res.data
+        if(status===200){
+            const newData = data.map(item=>{
+                arr.forEach(aItem=>[
+                    item[aItem + "_text"] = item[aItem] ?'是':'否'
+                ])
+                return item
+            })
+            root.tableData = newData
+            root.total=total
+            root.loading=false
+        }
+    }).catch(err=>{
+        root.loading = false
+        throw err
+    })
 }
