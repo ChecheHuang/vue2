@@ -63,3 +63,11 @@ export function getInfo() {
         url: "/info",
     })
 }
+
+//數據蓋覽
+export function dataview(){
+    return service({
+        method: "get",
+        url: '/dataview'
+    })
+}
