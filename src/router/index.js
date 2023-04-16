@@ -8,6 +8,7 @@ export default new Router({
   routes: [
     {
       path: "/",
+      name:"首頁",
       redirect: '/login',
       hidden:true,
       component: () => import('@/components/Home.vue')
